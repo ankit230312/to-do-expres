@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -9,14 +10,20 @@ app.use(express.json());
 
 const filePath = path.join(__dirname, 'tasks.txt');
 
+console.log('🛠 File path:', filePath);
+
 app.post('/add-task', (req, res) => {
   const { name, desc, deadline } = req.body;
   const data = `Task: ${name}\nDescription: ${desc}\nDeadline: ${deadline}\n\n`;
 
   fs.appendFile(filePath, data, (err) => {
-    if (err) return res.status(500).send('Error writing to file.');
+    if (err) {
+      console.error('❌ Error writing to file:', err); 
+      return res.status(500).send('Error writing to file.');
+    }
     res.send('Task saved successfully!');
   });
+  
 });
 
 app.get('/tasks', (req, res) => {

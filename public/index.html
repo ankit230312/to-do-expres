@@ -27,7 +27,7 @@
         <h2 class="text-center mb-5">📝 Todo App</h2>
 
         <div class="row g-4">
-            <!-- Task Form -->
+
             <div class="col-lg-6">
                 <div class="card shadow-sm p-4">
                     <h4 class="mb-3">Add New Task</h4>
@@ -53,23 +53,21 @@
                 </div>
             </div>
 
-            <!-- Task Display -->
-            <!-- Task Display -->
-            <div class="col-lg-6">
-                <div id="taskCards" class="d-grid gap-3"></div>
 
+            <div class="col-lg-6">
+                <div class="row" id="taskCards"></div> <!-- This is now a proper Bootstrap row -->
             </div>
 
         </div>
     </div>
+
+
     <script>
-
-
         async function loadTasks() {
             const res = await fetch('/tasks');
             const raw = await res.text();
             const cardContainer = document.getElementById('taskCards');
-            cardContainer.innerHTML = ''; // Clear previous content
+            cardContainer.innerHTML = '';
 
             if (!raw.trim()) {
                 cardContainer.innerHTML = '<p class="text-muted">No tasks available.</p>';
@@ -85,21 +83,51 @@
                 const deadline = lines[2]?.replace('Deadline: ', '') || '';
 
                 const card = `
-              <div class="col-md-3 mb-3">
-                <div class="card shadow-sm border-start border-primary border-4 h-100">
-                  <div class="card-body">
-                    <h5 class="card-title">${name}</h5>
-                    <p class="card-text text-muted">${desc}</p>
-                    <p class="card-text"><strong>Deadline:</strong> ${deadline}</p>
-                  </div>
-                </div>
-              </div>
-            `;
+  <div class="col-md-4 mb-3"> 
+    <div class="card shadow-sm border-start border-primary border-4 h-100">
+      <div class="card-body">
+        <h5 class="card-title">${name}</h5>
+        <p class="card-text text-muted">${desc}</p>
+        <p class="card-text"><strong>Deadline:</strong> ${deadline}</p>
+      </div>
+    </div>
+  </div>
+`;
                 cardContainer.innerHTML += card;
             });
         }
 
 
+        document.getElementById('taskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('taskName').value;
+            const desc = document.getElementById('taskDesc').value;
+            const deadline = document.getElementById('taskDeadline').value;
+
+            try {
+                const res = await fetch('/add-task', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, desc, deadline })
+                });
+
+                const message = await res.text();
+                alert(message);
+
+
+                document.getElementById('taskForm').reset();
+
+                loadTasks();
+            } catch (err) {
+                console.error('❌ Error adding task:', err);
+                alert('Failed to add task');
+            }
+        });
+
+        loadTasks();
     </script>
 
 </body>
