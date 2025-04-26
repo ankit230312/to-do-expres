@@ -18,3 +18,31 @@ Task: clhsdcls
 Description: csdclnsdl
 Deadline: 2025-04-29
 
+Task: cdsc;j;
+Description: cdsc;smcs;
+Deadline: 2025-05-09
+
+Task: fk;efkwe
+Description: cwlcjlejcw
+Deadline: 2025-04-29
+
+Task: cd;cm;dc
+Description: csd.cmsd.cms
+Deadline: 2025-05-01
+
+Task: dscsdcc
+Description: cmdc.cms
+Deadline: 2025-04-30
+
+Task: cdms/cm/
+Description: cdnsdc
+Deadline: 2025-05-08
+
+Task: Move to production
+Description: vsfvvdvss
+Deadline: 2025-04-27
+
+Task: vnfdlv
+Description: vdf;vmd
+Deadline: 2025-04-30
+
